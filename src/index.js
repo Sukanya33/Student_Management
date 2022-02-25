@@ -7,8 +7,10 @@ import { Provider } from 'react-redux';
 import CreateSagaMiddleWare from 'redux-saga';
 import './styles/styles.scss';
 import { loginWatcherSaga } from './saga/LoginSaga'
+import { updateStudentWatcherSaga } from './saga/UpdateStudentSaga';
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import StudentAPI from "./reducer/studentAPI";
+import sagas from './saga/Sagas';
 
 
 // create the saga middleware
@@ -21,7 +23,7 @@ const store = createStore(
     applyMiddleware(sagaMiddleware)
 );
 
-sagaMiddleware.run(loginWatcherSaga);
+sagaMiddleware.run(sagas);
 
 const jsx = (
 <Provider store={store}>

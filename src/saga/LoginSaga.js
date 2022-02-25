@@ -1,5 +1,5 @@
 
-import { takeLatest, call, put, select } from "redux-saga/effects";
+import { takeLatest, call, put } from "redux-saga/effects";
 import axios from "axios";
 
 //watcher saga: watches for actions dispatched to the store, starts worker saga

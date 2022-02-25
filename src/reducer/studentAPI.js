@@ -4,6 +4,8 @@ const API_CALL_FAILURE = "API_CALL_FAILURE";
 const API_LOGIN_CALL_REQUEST = "API_LOGIN_CALL_REQUEST";
 const API_LOGIN_CALL_SUCCESS = "API_LOGIN_CALL_SUCCESS";
 const API_LOGIN_CALL_FAILURE = "API_LOGIN_CALL_FAILURE";
+const API_FETCH_STUDENTS_CALL_SUCCESS = "API_FETCH_STUDENTS_CALL_SUCCESS";
+const API_DELETE_STUDENT_CALL_SUCCESS = "API_DELETE_STUDENT_CALL_SUCCESS";
 
 const intialState = {
     fetching: false,
@@ -54,6 +56,25 @@ const StudentAPI = (state = intialState, action) => {
                 fetching: false,
                 students: null,
                 error: action.error
+            }
+        case API_FETCH_STUDENTS_CALL_SUCCESS:
+            return {
+                ...state,
+                fetching: false,
+                students: action.students
+            }
+        case API_DELETE_STUDENT_CALL_SUCCESS:
+            return {
+                ...state,
+                students: state.students.filter(
+                    (student) => {
+                        if (student.id !== action.id)
+                            return true
+                        else
+                            return false
+                    }
+                ),
+                fetching: false
             }
         default :
             return state

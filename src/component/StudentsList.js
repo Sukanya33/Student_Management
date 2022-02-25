@@ -1,36 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 
-const StudentDetails = (props) => {
+const StudentsList = (props) => {
 
-    const [studentList, setStudentList] = useState([]);
-    // const navigate = useNavigate();
-    const token = props.token;
+    const studentList = useSelector(state => state.studentsAPI.students);
 
+    const dispatch = useDispatch();
     useEffect(() => {
-        fetch("https://mhvd-task-manager.herokuapp.com/users/all", {
-            method: "GET",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + token
-            }
-        }
-        )
-            .then((res) => res.json())
-            .then((data) => setStudentList(data))
-    }, []);
+        dispatch({type: "API_FETCH_STUDENTS_CALL_REQUEST"});
+    },[]);
 
-
-   
     return (
 
         <div >
             <br />
             <h1 align="center"> Students Dashboard </h1>
           
-            {studentList.length > 0 && 
+            {studentList && 
                 <table>
                 <tr key={"header"}>
                             <td className="header__subtitle">Name</td>
@@ -58,22 +46,26 @@ const StudentDetails = (props) => {
                             </td>
                             <td align="center">
                             <button
-                        onClick={(e) => {
-                            fetch("https://mhvd-task-manager.herokuapp.com/users/" + item._id, {
-                                method: "DELETE",
-                                headers: {
-                                    'Accept': 'application/json',
-                                    'Content-Type': 'application/json',
-                                    'Authorization': 'Bearer ' + props.token
-                                }
-                            })
-                                .then((res) => {
-                                    if (res.status === 200) {
-                                        const tempArray = studentList.filter((student) => student._id !== item._id)
+                        onClick={(e) => { 
+                            e.preventDefault();
+
+                            dispatch({type: "API_DELETE_STUDENT_CALL_REQUEST", id:item._id})
+
+                            // fetch("https://mhvd-task-manager.herokuapp.com/users/" + item._id, {
+                            //     method: "DELETE",
+                            //     headers: {
+                            //         'Accept': 'application/json',
+                            //         'Content-Type': 'application/json',
+                            //         'Authorization': 'Bearer ' + props.token
+                            //     }
+                            // })
+                            //     .then((res) => {
+                            //         if (res.status === 200) {
+                            //             const tempArray = studentList.filter((student) => student._id !== item._id)
                                        
-                                        setStudentList(tempArray)
-                                    }
-                                })
+                            //             // setStudentList(tempArray)
+                            //         }
+                            //     })
                         }}
                     > Remove </button>        
                             </td>
@@ -87,5 +79,5 @@ const StudentDetails = (props) => {
     )
 }
 
-export default StudentDetails;
+export default StudentsList;
 

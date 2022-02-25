@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import validator from "validator";
 
 
 const StudentForm = (props) => {
 
   const [student, setStudent] = useState({});
+  const dispatch = useDispatch();
 
 
   useEffect(() => {
@@ -90,22 +92,25 @@ const StudentForm = (props) => {
       // fetch method
 
       if (props.updateStudent) {
+
+        dispatch({ type: "API_UPDATE_STUDENT_CALL_REQUEST", id: student.id, name: name, class: sclass, gender: gender, age: age, department: department, location: location})
+
         //update student details with server
-        url = "https://mhvd-task-manager.herokuapp.com/users/" + student.id
-        method = "PATCH"
-        headers = {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + props.token
-        }
-        body = JSON.stringify({
-          name: student.studentName,
-          class: student.studentClass,
-          gender: student.studentGender,
-          age: student.studentAge,
-          department: student.studentDepartment,
-          location: student.studentLocation,
-        })
+        // url = "https://mhvd-task-manager.herokuapp.com/users/" + student.id
+        // method = "PATCH"
+        // headers = {
+        //   'Accept': 'application/json',
+        //   'Content-Type': 'application/json',
+        //   'Authorization': 'Bearer ' + props.token
+        // }
+        // body = JSON.stringify({
+        //   name: student.studentName,
+        //   class: student.studentClass,
+        //   gender: student.studentGender,
+        //   age: student.studentAge,
+        //   department: student.studentDepartment,
+        //   location: student.studentLocation,
+        // })
       } else {
         // create student with server
         url = "https://mhvd-task-manager.herokuapp.com/users"
