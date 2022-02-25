@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import validator from "validator";
 
 
@@ -10,6 +11,8 @@ const LoginPage = (props) => {
         passWord: "",
         errorMsg: ""
     });
+    
+    const dispatch = useDispatch();
 
     const handleOnSubmit = (e) => {
         e.preventDefault();
@@ -29,30 +32,7 @@ const LoginPage = (props) => {
         }
        
         else {
-            fetch("https://mhvd-task-manager.herokuapp.com/users/login", {
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(
-                    { email: login.email, password: login.passWord }
-                )
-            })
-                .then((res) => {
-                    if (res.status === 200)
-                        return res.json();
-                    else
-                        setLogin({
-                            ...login,
-                            errorMsg: "Invalid credentials entered."
-                        });
-                })
-                .then((data) => {
-                    
-                    if (data.token)
-                        props.token(data.token);
-                })
+            dispatch({ type: "API_LOGIN_CALL_REQUEST", login_email: email, login_password: password });
         }
     }
 
@@ -64,7 +44,7 @@ const LoginPage = (props) => {
                 <h1 className="header__title"> Student Management </h1>
             </div>
             <div>
-                <form className="form">
+                <form className="form" onSubmit={(e) => e.preventDefault()}>
                     <table align="center">
                         <tr><td>
                             <label class="label" >Email: </label>
