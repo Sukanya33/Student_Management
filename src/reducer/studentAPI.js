@@ -6,6 +6,10 @@ const API_LOGIN_CALL_SUCCESS = "API_LOGIN_CALL_SUCCESS";
 const API_LOGIN_CALL_FAILURE = "API_LOGIN_CALL_FAILURE";
 const API_FETCH_STUDENTS_CALL_SUCCESS = "API_FETCH_STUDENTS_CALL_SUCCESS";
 const API_DELETE_STUDENT_CALL_SUCCESS = "API_DELETE_STUDENT_CALL_SUCCESS";
+const API_UPDATE_STUDENT_CALL_SUCCESS = "API_UPDATE_STUDENT_CALL_SUCCESS";
+const API_CREATE_STUDENT_CALL_SUCCESS = "API_CREATE_STUDENT_CALL_SUCCESS";
+const API_LOGOUT_CALL_SUCCESS = "API_LOGOUT_CALL_SUCCESS";
+
 
 const intialState = {
     fetching: false,
@@ -64,13 +68,39 @@ const StudentAPI = (state = intialState, action) => {
                 students: action.students
             }
         case API_DELETE_STUDENT_CALL_SUCCESS:
-            const students = {
+            return {
                 ...state,
-                students: state.students.filter((temp_student) => temp_student._id !== action.id),
+                students: state.students.filter((student) => student._id !== action.id),
                 fetching: false
             };
-            console.log("after deleting the students",state.students);
-            return students;
+           
+        case API_CREATE_STUDENT_CALL_SUCCESS:
+            return {
+                ...state,
+                students: [
+                    ...state.students,
+                    action.student
+                ],
+                fetching: false
+            }
+        case API_UPDATE_STUDENT_CALL_SUCCESS:
+            return {
+                ...state,
+                students: state.students.map((student) => {
+                   if(student._id === action.student.id)
+                        return action.student
+                    else
+                        return student
+                }),
+                fetching: false
+            }
+        case  API_LOGOUT_CALL_SUCCESS:
+            return {
+                loggedInUserToken: null
+            }
+
+
+            
         default :
             return state
     }

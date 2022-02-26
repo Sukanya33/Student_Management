@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Saga } from "redux-saga";
 import { takeLatest, put, call, select } from "redux-saga/effects";
 
 
@@ -23,7 +22,7 @@ function* fetchStudentsWorkerSaga() {
     try{
             const token = yield select(state => state.studentsAPI.loggedInUserToken);
             const response = yield call(fetchStudentsList,token);
-            // console.log("response in fetchstudentwatchersaga",response);
+            
             yield put({ type: "API_FETCH_STUDENTS_CALL_SUCCESS", students: response.data})
     }
     catch(error){

@@ -51,21 +51,7 @@ const StudentsList = (props) => {
 
                             dispatch({type: "API_DELETE_STUDENT_CALL_REQUEST", id:item._id})
 
-                            // fetch("https://mhvd-task-manager.herokuapp.com/users/" + item._id, {
-                            //     method: "DELETE",
-                            //     headers: {
-                            //         'Accept': 'application/json',
-                            //         'Content-Type': 'application/json',
-                            //         'Authorization': 'Bearer ' + props.token
-                            //     }
-                            // })
-                            //     .then((res) => {
-                            //         if (res.status === 200) {
-                            //             const tempArray = studentList.filter((student) => student._id !== item._id)
-                                       
-                            //             // setStudentList(tempArray)
-                            //         }
-                            //     })
+                           
                         }}
                     > Remove </button>        
                             </td>

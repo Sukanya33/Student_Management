@@ -20,7 +20,7 @@ const StudentForm = (props) => {
     var studentGender = (props.updateStudent && props.updateStudent.gender) ? props.updateStudent.gender : "";
     var studentLocation = (props.updateStudent && props.updateStudent.location) ? props.updateStudent.location : "";
 
-    
+
     setStudent({
       ...student,
       id: id,
@@ -40,7 +40,7 @@ const StudentForm = (props) => {
   const handleOnSubmit = (e, student) => {
 
     e.preventDefault();
-  
+
     var url, method, headers, body;
     var email = student.studentEmail;
     var password = student.studentPassword;
@@ -61,7 +61,7 @@ const StudentForm = (props) => {
     }
 
     if (!name || !sclass || !gender || !age || !department || !location) {
-      
+
       setStudent({
         ...student,
         errorMsg: "Enter all required fields"
@@ -70,7 +70,7 @@ const StudentForm = (props) => {
     }
 
     else if (!validEmail && !validPwd) {
-     
+
       setStudent({
         ...student,
         errorMsg: "Enter valid Email and Valid Password"
@@ -89,84 +89,54 @@ const StudentForm = (props) => {
       })
     }
     else {
-      // fetch method
+
 
       if (props.updateStudent) {
 
-        dispatch({ type: "API_UPDATE_STUDENT_CALL_REQUEST", id: student.id, name: name, class: sclass, gender: gender, age: age, department: department, location: location})
-
-        //update student details with server
-        // url = "https://mhvd-task-manager.herokuapp.com/users/" + student.id
-        // method = "PATCH"
-        // headers = {
-        //   'Accept': 'application/json',
-        //   'Content-Type': 'application/json',
-        //   'Authorization': 'Bearer ' + props.token
-        // }
-        // body = JSON.stringify({
-        //   name: student.studentName,
-        //   class: student.studentClass,
-        //   gender: student.studentGender,
-        //   age: student.studentAge,
-        //   department: student.studentDepartment,
-        //   location: student.studentLocation,
-        // })
-      } else {
-        // create student with server
-        url = "https://mhvd-task-manager.herokuapp.com/users"
-        method = "POST"
-        headers = {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+        const updatedStudent = {
+          id: student.id,
+          name: name,
+          class: sclass,
+          gender: gender,
+          age: age,
+          department: department,
+          location: location
         }
-        body = JSON.stringify({
-          // id: student.id,
-          name: student.studentName,
-          class: student.studentClass,
-          email: student.studentEmail,
-          password: student.studentPassword,
-          gender: student.studentGender,
-          age: student.studentAge,
-          department: student.studentDepartment,
-          location: student.studentLocation,
-        });
+
+        dispatch({ type: "API_UPDATE_STUDENT_CALL_REQUEST", student: updatedStudent })
+
+
+      } else {
+        const student = {
+          name: name,
+          email: email,
+          password: password,
+          class: sclass,
+          gender: gender,
+          age: age,
+          department: department,
+          location: location
+        }
+        dispatch({ type: "API_CREATE_STUDENT_CALL_REQUEST", student: student })
+
+
       }
-      fetch(url, {
-        method,
-        headers,
-        body: body
-      })
-        .then((res) => {
-          if (res.status === 201 || res.status === 200) {
-            //do further if required
-            // setRedirect(true);
-            //<Redirect to="/dashboard" />
-            //history.push("/dashboard")
-          document.getElementById("studentClass").value = "";
-          document.getElementById("studentName").value = "";
-          document.getElementById("studentEmail").value = "";
-          document.getElementById("studentGender").value = "";
-          document.getElementById("studentAge").value = "";
-          document.getElementById("studentDepartment").value = "";
-          document.getElementById("studentLocation").value = "";
-          document.getElementById("studentPassword").value = "";
-          }
-        })
+
     }
   };
 
-  
+
 
   return (
     <div className="container"> <br />
-      <form onSubmit={(e) => handleOnSubmit(e, student)}>
-        
-          <h1 > Student Form </h1>
-         
-          <div class="col-25">
+      <form onSubmit={(e) => e.preventDefault()}>
+
+        <h1 > Student Form </h1>
+
+        <div class="col-25">
           <label class="label"> Student Name: </label>
-          </div>
-          <div class="col-75">
+        </div>
+        <div class="col-75">
           <input id="studentName" type="text"
             value={student.studentName}
             onChange={(e) => setStudent({
@@ -178,149 +148,149 @@ const StudentForm = (props) => {
         </div>
 
         <div class="row">
-        <div class="col-25">
-          <label class="label"> Student Class: </label>
+          <div class="col-25">
+            <label class="label"> Student Class: </label>
           </div>
           <div class="col-75">
-          <input id="studentClass" type="text"
-            value={student.studentClass}
-            onChange={(e) => setStudent({
-              ...student,
-              studentClass: e.target.value
-            })
-            }
-          />
+            <input id="studentClass" type="text"
+              value={student.studentClass}
+              onChange={(e) => setStudent({
+                ...student,
+                studentClass: e.target.value
+              })
+              }
+            />
           </div>
         </div>
         {!props.updateStudent ?
           <div class="row">
-          <div class="col-25">
-            <label class="label"> Student Email: </label>
+            <div class="col-25">
+              <label class="label"> Student Email: </label>
             </div>
             <div class="col-75">
-            <input id="studentEmail" type="text"
-              value={student.studentEmail}
-              onChange={(e) => setStudent({
-                ...student,
-                studentEmail: e.target.value
-              })
-              }
-            />
+              <input id="studentEmail" type="text"
+                value={student.studentEmail}
+                onChange={(e) => setStudent({
+                  ...student,
+                  studentEmail: e.target.value
+                })
+                }
+              />
             </div>
           </div>
           : null}
 
         {!props.updateStudent ?
           <div class="row">
-          <div class="col-25">
-          <label className="label"> Student Password: </label>
-          </div>
-          <div class="col-75">
-            <input id="studentPassword" type="password"
-              value={student.studentPassword}
-              onChange={(e) => setStudent({
-                ...student,
-                studentPassword: e.target.value
-              })
-              }
-            />
+            <div class="col-25">
+              <label className="label"> Student Password: </label>
+            </div>
+            <div class="col-75">
+              <input id="studentPassword" type="password"
+                value={student.studentPassword}
+                onChange={(e) => setStudent({
+                  ...student,
+                  studentPassword: e.target.value
+                })
+                }
+              />
             </div>
           </div>
           : null}
 
         <div class="row">
-        <div class="col-25">
-          <label class="label"> Student Gender: </label> </div>
+          <div class="col-25">
+            <label class="label"> Student Gender: </label> </div>
           <div class="col-75">
-          <input id="studentGender" type="text"
-            value={student.studentGender}
-            onChange={(e) => setStudent({
-              ...student,
-              studentGender: e.target.value
-            })
-            }
-          />
+            <input id="studentGender" type="text"
+              value={student.studentGender}
+              onChange={(e) => setStudent({
+                ...student,
+                studentGender: e.target.value
+              })
+              }
+            />
           </div>
         </div>
 
         <div class="row">
-        <div class="col-25">
-          <label class="label"> Student Age: </label> </div>
+          <div class="col-25">
+            <label class="label"> Student Age: </label> </div>
           <div class="col-75">
-          <input id="studentAge" type="text"
-            value={student.studentAge}
-            onChange={(e) => setStudent({
-              ...student,
-              studentAge: e.target.value
-            })
-            }
-          />
-        </div>
+            <input id="studentAge" type="text"
+              value={student.studentAge}
+              onChange={(e) => setStudent({
+                ...student,
+                studentAge: e.target.value
+              })
+              }
+            />
+          </div>
         </div>
 
         <div class="row">
-        <div class="col-25">
-          <label class="label"> Student Department: </label>
+          <div class="col-25">
+            <label class="label"> Student Department: </label>
           </div>
           <div class="col-75">
-          <input id="studentDepartment" type="text"
-            value={student.studentDepartment}
-            onChange={(e) => setStudent({
-              ...student,
-              studentDepartment: e.target.value
-            })
-            }
-          />
-        </div>
-        </div>
-
-        <div class="row">
-        <div class="col-25">
-          <label class="label"> Student Location: </label>
+            <input id="studentDepartment" type="text"
+              value={student.studentDepartment}
+              onChange={(e) => setStudent({
+                ...student,
+                studentDepartment: e.target.value
+              })
+              }
+            />
           </div>
-           <div class="col-75">
-          <input id="studentLocation" type="text"
-            value={student.studentLocation}
-            onChange={(e) => setStudent({
-              ...student,
-              studentLocation: e.target.value
-            })
-            }
-          />
-        </div>
-        </div>
-
-       <div class="row">
-       <div class="col-25"></div>
-        <div class="col-75">
-        <button class="button button1" onClick={(e) => {
-          e.preventDefault();
-          document.getElementById("studentClass").value = "";
-          document.getElementById("studentName").value = "";
-          document.getElementById("studentEmail").value = "";
-          document.getElementById("studentGender").value = "";
-          document.getElementById("studentAge").value = "";
-          document.getElementById("studentDepartment").value = "";
-          document.getElementById("studentLocation").value = "";
-          document.getElementById("studentPassword").value = "";
-        }} > RESET </button>
-
-<button class="button button1" onClick={(e) => { }
-        }
-        > SUBMIT </button>
-        </div>
         </div>
 
         <div class="row">
-       <div class="col-25"></div>
-        <div class="col-75">
-        {student.errorMsg && <p className="form__p">{student.errorMsg}</p>}
+          <div class="col-25">
+            <label class="label"> Student Location: </label>
+          </div>
+          <div class="col-75">
+            <input id="studentLocation" type="text"
+              value={student.studentLocation}
+              onChange={(e) => setStudent({
+                ...student,
+                studentLocation: e.target.value
+              })
+              }
+            />
+          </div>
         </div>
+
+        <div class="row">
+          <div class="col-25"></div>
+          <div class="col-75">
+            <button class="button button1" onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("studentClass").value = "";
+              document.getElementById("studentName").value = "";
+              document.getElementById("studentEmail").value = "";
+              document.getElementById("studentGender").value = "";
+              document.getElementById("studentAge").value = "";
+              document.getElementById("studentDepartment").value = "";
+              document.getElementById("studentLocation").value = "";
+              document.getElementById("studentPassword").value = "";
+            }} > RESET </button>
+
+            <button class="button button1" onClick={(e) => { handleOnSubmit(e, student) }
+            }
+            > SUBMIT </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-25"></div>
+          <div class="col-75">
+            {student.errorMsg && <p className="form__p">{student.errorMsg}</p>}
+          </div>
         </div>
       </form>
 
       {/* {redirect && <Redirect to='/help'/>} */}
-      
+
 
     </div>
   )

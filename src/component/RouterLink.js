@@ -1,7 +1,10 @@
 import React from "react";
 import { NavLink } from 'react-router-dom';
+import { useDispatch } from "react-redux";
 
 const RouterLink = (props) => {
+
+    const dispatch = useDispatch();
 
     return (
         <div>
@@ -18,19 +21,9 @@ const RouterLink = (props) => {
                             onClick={
                                 (e) => {
                                     e.preventDefault();
-                                    fetch("https://mhvd-task-manager.herokuapp.com/users/logout", {
-                                        method: "DELETE",
-                                        headers: {
-                                            'Accept': 'application/json',
-                                            'Content-Type': 'application/json',
-                                            'Authorization': 'Bearer ' + props.token
-                                        }
-                                    })
-                                        .then((res) => {
-                                            if (res.status === 200) {
-                                                props.updateToken("");
-                                            }
-                                        })
+                                    
+                                    dispatch({ type: "API_LOGOUT_CALL_REQUEST" });
+                                  
                                 }
                             }
 
