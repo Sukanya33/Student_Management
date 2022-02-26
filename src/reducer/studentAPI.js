@@ -64,18 +64,13 @@ const StudentAPI = (state = intialState, action) => {
                 students: action.students
             }
         case API_DELETE_STUDENT_CALL_SUCCESS:
-            return {
+            const students = {
                 ...state,
-                students: state.students.filter(
-                    (student) => {
-                        if (student.id !== action.id)
-                            return true
-                        else
-                            return false
-                    }
-                ),
+                students: state.students.filter((temp_student) => temp_student._id !== action.id),
                 fetching: false
-            }
+            };
+            console.log("after deleting the students",state.students);
+            return students;
         default :
             return state
     }
