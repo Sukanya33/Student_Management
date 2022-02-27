@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import validator from "validator";
+import { ClipLoader } from "react-spinners";
 
 
 const StudentForm = (props) => {
 
   const [student, setStudent] = useState({});
   const dispatch = useDispatch();
+  const loading = useSelector(state => state.studentsAPI.fetching)
 
 
   useEffect(() => {
@@ -284,6 +286,7 @@ const StudentForm = (props) => {
         <div class="row">
           <div class="col-25"></div>
           <div class="col-75">
+          <ClipLoader color={"#26067E"} size={50} loading={loading} />
             {student.errorMsg && <p className="form__p">{student.errorMsg}</p>}
           </div>
         </div>

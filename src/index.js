@@ -6,8 +6,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import CreateSagaMiddleWare from 'redux-saga';
 import './styles/styles.scss';
-import { loginWatcherSaga } from './saga/LoginSaga'
-import { updateStudentWatcherSaga } from './saga/UpdateStudentSaga';
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import StudentAPI from "./reducer/studentAPI";
 import sagas from './saga/Sagas';

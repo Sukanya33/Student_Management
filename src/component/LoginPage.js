@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import validator from "validator";
-import LoadingIndicator from "react-loading-indicator";
+import { ClipLoader } from "react-spinners";
 
 const LoginPage = (props) => {
 
@@ -11,7 +11,7 @@ const LoginPage = (props) => {
         errorMsg: ""
 
     });
-    const loading = useSelector(state => state.studentsAPI.loading)
+    const loading = useSelector(state => state.studentsAPI.fetching)
 
     const dispatch = useDispatch();
 
@@ -56,7 +56,8 @@ const LoginPage = (props) => {
                                     onChange={(e) => {
                                         setLogin({
                                             ...login,
-                                            email: e.target.value
+                                            email: e.target.value,
+                                            errorMsg: ""
                                         })
                                     }
                                     }
@@ -74,7 +75,8 @@ const LoginPage = (props) => {
                                 onChange={(e) => {
                                     setLogin({
                                         ...login,
-                                        passWord: e.target.value
+                                        passWord: e.target.value,
+                                        errorMsg: ""
                                     })
                                 }
                                 } />
@@ -103,7 +105,9 @@ const LoginPage = (props) => {
                                 />
                             </td></tr>
                         <tr><td></td>
-                            {loading ? <LoadingIndicator /> : null}
+                            <div className="loginPage_loadingIndicator">
+                            <ClipLoader  color={"#26067E"} size={50} loading={loading} />
+                            </div>
                             <td> {login.errorMsg && <p className="form__p">{login.errorMsg}</p>}</td>
 
                         </tr>

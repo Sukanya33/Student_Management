@@ -49,7 +49,7 @@ function* createStudentWorkerSaga(data) {
 
     }
     catch(error) {
-
+        yield put({ type: "API_CREATE_STUDENT_CALL_FAILURE", error_msg: error })
     }
         
 }

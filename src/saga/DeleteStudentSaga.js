@@ -21,7 +21,7 @@ function* deleteStudentWorkerSaga(data) {
     try{
         const id = data.id;
         const token = yield select(state => state.studentsAPI.loggedInUserToken);
-        const response = yield call(deleteStudent,id,token);
+        yield call(deleteStudent,id,token);
 
         yield put({type:"API_DELETE_STUDENT_CALL_SUCCESS",id:id})
 

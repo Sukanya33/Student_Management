@@ -20,7 +20,7 @@ function performLogout(token){
 function* logoutWorkerSaga() {
     try {
         const token = yield select(state => state.studentsAPI.loggedInUserToken);
-        const response = yield call(performLogout, token);
+        yield call(performLogout, token);
 
         yield put({ type:"API_LOGOUT_CALL_SUCCESS"})
 
