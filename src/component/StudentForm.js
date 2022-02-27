@@ -61,6 +61,28 @@ const StudentForm = (props) => {
       minSymbols: 1,
     });
 
+    setStudent({
+      ...student,
+      studentName: '',
+      studentClass: '',
+      studentAge: '',
+      studentEmail: '',
+      studentPassword: '',
+      studentGender: '',
+      studentLocation: '',
+      studentDepartment: '',
+    });
+
+    // document.getElementById('studentName').value = '';
+    // document.getElementById('studentClass').value = '';
+    // document.getElementById('studentEmail').value = '';
+    // document.getElementById('studentPassword').value = '';
+    // document.getElementById('studentGender').value = '';
+    // document.getElementById('studentAge').value = '';
+    // document.getElementById('studentDepartment').value = '';
+    // document.getElementById('studentPassword').value = '';
+    // document.getElementById('studentLocation').value = '';
+
     if (props.updateStudent) {
       validPwd = true;
     }
@@ -117,7 +139,6 @@ const StudentForm = (props) => {
 
   return (
     <div className="container">
-      {' '}
       <br />
       <form onSubmit={(e) => e.preventDefault()}>
         <h1> Student Form </h1>
@@ -282,14 +303,25 @@ const StudentForm = (props) => {
               class="button button1"
               onClick={(e) => {
                 e.preventDefault();
-                document.getElementById('studentClass').value = '';
-                document.getElementById('studentName').value = '';
-                document.getElementById('studentEmail').value = '';
-                document.getElementById('studentGender').value = '';
-                document.getElementById('studentAge').value = '';
-                document.getElementById('studentDepartment').value = '';
-                document.getElementById('studentLocation').value = '';
-                document.getElementById('studentPassword').value = '';
+                setStudent({
+                  ...student,
+                  studentName: '',
+                  studentClass: '',
+                  studentAge: '',
+                  studentEmail: '',
+                  studentPassword: '',
+                  studentGender: '',
+                  studentLocation: '',
+                  studentDepartment: '',
+                });
+                // document.getElementById('studentClass').value = '';
+                // document.getElementById('studentName').value = '';
+                // document.getElementById('studentEmail').value = '';
+                // document.getElementById('studentGender').value = '';
+                // document.getElementById('studentAge').value = '';
+                // document.getElementById('studentDepartment').value = '';
+                // document.getElementById('studentLocation').value = '';
+                // document.getElementById('studentPassword').value = '';
               }}
             >
               {' '}
