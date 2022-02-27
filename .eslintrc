@@ -4,8 +4,16 @@
     "sourceType": "module",
     "allowImportExportEverywhere": false,
     "requireConfigFile": false,
-    "codeFrame": false
+    "codeFrame": false,
+    "babelOptions": {
+      "presets": ["@babel/preset-react"]
+    }
   },
+  "overrides": [
+    {
+      "excludedFiles": ["${workspaceFolder}/**/*.js"]
+    }
+  ],
   "extends": ["prettier"],
   "env": {
     "browser": true,
