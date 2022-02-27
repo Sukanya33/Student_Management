@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import validator from "validator";
-
-
+import LoadingIndicator from "react-loading-indicator";
 
 const LoginPage = (props) => {
 
@@ -10,34 +9,34 @@ const LoginPage = (props) => {
         email: "",
         passWord: "",
         errorMsg: ""
+
     });
-    
+    const loading = useSelector(state => state.studentsAPI.loading)
+
     const dispatch = useDispatch();
 
     const handleOnSubmit = (e) => {
         e.preventDefault();
-       
+
         var email = login.email;
         var password = login.passWord;
         var validEmail = validator.isEmail(email);
         var validPwd = password;
 
-        
         if (!validEmail || !validPwd) {
-           
+
             setLogin({
                 ...login,
                 errorMsg: "Please enter valid Email and Password."
             })
         }
-       
+
         else {
             dispatch({ type: "API_LOGIN_CALL_REQUEST", login_email: email, login_password: password });
         }
     }
 
     return (
-
 
         <div >
             <div className="header">
@@ -49,7 +48,7 @@ const LoginPage = (props) => {
                         <tr><td>
                             <label class="label" >Email: </label>
                         </td>
-                            <td>                           
+                            <td>
                                 <input type="email"
                                     name="email"
                                     id="email"
@@ -103,11 +102,13 @@ const LoginPage = (props) => {
                                     onClick={(e) => { handleOnSubmit(e) }}
                                 />
                             </td></tr>
-                            <tr><td></td>
-                                <td> {login.errorMsg && <p className="form__p">{login.errorMsg}</p>}</td>
-                            </tr>
-                    </table>               
-               </form>
+                        <tr><td></td>
+                            {loading ? <LoadingIndicator /> : null}
+                            <td> {login.errorMsg && <p className="form__p">{login.errorMsg}</p>}</td>
+
+                        </tr>
+                    </table>
+                </form>
             </div>
         </div>
     )

@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector }  from "react-redux";
+import { useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import RouterLink from "../component/RouterLink";
 import StudentsList from "../component/StudentsList";
@@ -12,12 +12,10 @@ const Router = () => {
     const token = useSelector(state => {
         return state.studentsAPI.loggedInUserToken
     });
-    console.log("token from router",token)
-    
+
     return (
         <div>
             <BrowserRouter>
-            {console.log("token in router.js",token)}
                 <div>
                     {token.length > 0 ? <RouterLink token={token} /> : null}
                     <Routes>

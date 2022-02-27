@@ -18,7 +18,8 @@ const intialState = {
     students: null,
     loggedInUser: null,
     loggedInUserToken: "",
-    error: null
+    error: null,
+    loading: false
 };
 
 const StudentAPI = (state = intialState, action) => {
@@ -37,10 +38,16 @@ const StudentAPI = (state = intialState, action) => {
                 fetching: false,
                 students: action.student
             }
+        case API_LOGIN_CALL_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
         case API_LOGIN_CALL_SUCCESS:
             return {
                 ...state,
                 fetching: false,
+                loading: false,
                 loggedInUserToken: action.user_token,
                 login_email: null,
                 login_password: null
