@@ -2,11 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import validator from 'validator';
 import { ClipLoader } from 'react-spinners';
+import { useNavigate } from 'react-router-dom';
 
 const StudentForm = (props) => {
   const [student, setStudent] = useState({});
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.studentsAPI.fetching);
+  const create_update_req_success = useSelector(
+    (state) => state.studentsAPI.create_update_req_success,
+  );
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     var id = props.updateStudent && props.updateStudent._id ? props.updateStudent._id : '';
@@ -72,16 +78,6 @@ const StudentForm = (props) => {
       studentLocation: '',
       studentDepartment: '',
     });
-
-    // document.getElementById('studentName').value = '';
-    // document.getElementById('studentClass').value = '';
-    // document.getElementById('studentEmail').value = '';
-    // document.getElementById('studentPassword').value = '';
-    // document.getElementById('studentGender').value = '';
-    // document.getElementById('studentAge').value = '';
-    // document.getElementById('studentDepartment').value = '';
-    // document.getElementById('studentPassword').value = '';
-    // document.getElementById('studentLocation').value = '';
 
     if (props.updateStudent) {
       validPwd = true;
@@ -314,14 +310,6 @@ const StudentForm = (props) => {
                   studentLocation: '',
                   studentDepartment: '',
                 });
-                // document.getElementById('studentClass').value = '';
-                // document.getElementById('studentName').value = '';
-                // document.getElementById('studentEmail').value = '';
-                // document.getElementById('studentGender').value = '';
-                // document.getElementById('studentAge').value = '';
-                // document.getElementById('studentDepartment').value = '';
-                // document.getElementById('studentLocation').value = '';
-                // document.getElementById('studentPassword').value = '';
               }}
             >
               {' '}
@@ -344,6 +332,7 @@ const StudentForm = (props) => {
           <div class="col-25"></div>
           <div class="col-75">
             <ClipLoader color={'#26067E'} size={50} loading={loading} />
+            {create_update_req_success && navigate('/dashboard')}
             {student.errorMsg && <p className="form__p">{student.errorMsg}</p>}
           </div>
         </div>

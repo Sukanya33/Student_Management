@@ -15,6 +15,7 @@ const API_LOGOUT_CALL_SUCCESS = 'API_LOGOUT_CALL_SUCCESS';
 
 const intialState = {
   fetching: false,
+  create_update_req_success: false,
   login_email: null,
   login_password: null,
   students: null,
@@ -29,6 +30,7 @@ const StudentAPI = (state = intialState, action) => {
       return {
         ...state,
         fetching: true,
+        create_update_req_success: false,
       };
     case API_LOGIN_CALL_SUCCESS:
       return {
@@ -37,6 +39,7 @@ const StudentAPI = (state = intialState, action) => {
         loggedInUserToken: action.user_token,
         login_email: null,
         login_password: null,
+        create_update_req_success: false,
       };
     case API_LOGIN_CALL_FAILURE:
       return {
@@ -46,45 +49,53 @@ const StudentAPI = (state = intialState, action) => {
         error: action.error_msg,
         login_email: null,
         login_password: null,
+        create_update_req_success: false,
       };
     case API_FETCH_STUDENTS_CALL_REQUEST:
       return {
         ...state,
         fetching: true,
+        create_update_req_success: false,
       };
     case API_FETCH_STUDENTS_CALL_SUCCESS:
       return {
         ...state,
         fetching: false,
         students: action.students,
+        create_update_req_success: false,
       };
     case API_FETCH_STUDENTS_CALL_FAILURE:
       return {
         ...state,
         fetching: false,
         error: action.error_msg,
+        create_update_req_success: false,
       };
     case API_CREATE_STUDENT_CALL_REQUEST:
       return {
         ...state,
         fetching: true,
+        create_update_req_success: false,
       };
     case API_CREATE_STUDENT_CALL_SUCCESS:
       return {
         ...state,
         students: [...state.students, action.student],
         fetching: false,
+        create_update_req_success: true,
       };
     case API_CREATE_STUDENT_CALL_FAILURE:
       return {
         ...state,
         fetching: false,
         error: action.error_msg,
+        create_update_req_success: false,
       };
     case API_UPDATE_STUDENT_CALL_REQUEST:
       return {
         ...state,
         fetching: true,
+        create_update_req_success: false,
       };
     case API_UPDATE_STUDENT_CALL_SUCCESS:
       return {
@@ -94,23 +105,27 @@ const StudentAPI = (state = intialState, action) => {
           else return student;
         }),
         fetching: false,
+        create_update_req_success: true,
       };
     case API_UPDATE_STUDENT_CALL_FAILURE:
       return {
         ...state,
         fetching: false,
         error: action.error_msg,
+        create_update_req_success: false,
       };
     case API_DELETE_STUDENT_CALL_SUCCESS:
       return {
         ...state,
         students: state.students.filter((student) => student._id !== action.id),
         fetching: false,
+        create_update_req_success: false,
       };
     case API_LOGOUT_CALL_SUCCESS:
       return {
         loggedInUserToken: null,
         fetching: false,
+        create_update_req_success: false,
       };
     default:
       return state;
