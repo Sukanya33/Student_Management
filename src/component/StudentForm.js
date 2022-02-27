@@ -1,27 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import validator from "validator";
-import { ClipLoader } from "react-spinners";
-
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import validator from 'validator';
+import { ClipLoader } from 'react-spinners';
 
 const StudentForm = (props) => {
-
   const [student, setStudent] = useState({});
   const dispatch = useDispatch();
-  const loading = useSelector(state => state.studentsAPI.fetching)
-
+  const loading = useSelector((state) => state.studentsAPI.fetching);
 
   useEffect(() => {
-    var id = (props.updateStudent && props.updateStudent._id) ? props.updateStudent._id : "";
-    var studentName = (props.updateStudent && props.updateStudent.name) ? props.updateStudent.name : "";
-    var studentClass = (props.updateStudent && props.updateStudent.class) ? props.updateStudent.class : "";
-    var studentAge = (props.updateStudent && props.updateStudent.age) ? props.updateStudent.age : "";
-    var studentDepartment = (props.updateStudent && props.updateStudent.department) ? props.updateStudent.department : "";
-    var studentEmail = (props.updateStudent && props.updateStudent.email) ? props.updateStudent.email : "";
-    var studentPassword = (props.updateStudent && props.updateStudent.password) ? props.updateStudent.password : "";
-    var studentGender = (props.updateStudent && props.updateStudent.gender) ? props.updateStudent.gender : "";
-    var studentLocation = (props.updateStudent && props.updateStudent.location) ? props.updateStudent.location : "";
-
+    var id = props.updateStudent && props.updateStudent._id ? props.updateStudent._id : '';
+    var studentName =
+      props.updateStudent && props.updateStudent.name ? props.updateStudent.name : '';
+    var studentClass =
+      props.updateStudent && props.updateStudent.class ? props.updateStudent.class : '';
+    var studentAge = props.updateStudent && props.updateStudent.age ? props.updateStudent.age : '';
+    var studentDepartment =
+      props.updateStudent && props.updateStudent.department ? props.updateStudent.department : '';
+    var studentEmail =
+      props.updateStudent && props.updateStudent.email ? props.updateStudent.email : '';
+    var studentPassword =
+      props.updateStudent && props.updateStudent.password ? props.updateStudent.password : '';
+    var studentGender =
+      props.updateStudent && props.updateStudent.gender ? props.updateStudent.gender : '';
+    var studentLocation =
+      props.updateStudent && props.updateStudent.location ? props.updateStudent.location : '';
 
     setStudent({
       ...student,
@@ -33,14 +36,11 @@ const StudentForm = (props) => {
       studentGender: studentGender,
       studentAge: studentAge,
       studentDepartment: studentDepartment,
-      studentLocation: studentLocation
-
+      studentLocation: studentLocation,
     });
   }, [props.updateStudent]);
 
-
   const handleOnSubmit = (e, student) => {
-
     e.preventDefault();
 
     var url, method, headers, body;
@@ -54,8 +54,11 @@ const StudentForm = (props) => {
     var department = student.studentDepartment;
     var location = student.studentLocation;
     var validPwd = validator.isStrongPassword(password, {
-      minLength: 8, minLowerCase: 1, minUpperCase: 1,
-      minNumbers: 1, minSymbols: 1
+      minLength: 8,
+      minLowerCase: 1,
+      minUpperCase: 1,
+      minNumbers: 1,
+      minSymbols: 1,
     });
 
     if (props.updateStudent) {
@@ -63,38 +66,28 @@ const StudentForm = (props) => {
     }
 
     if (!name || !sclass || !gender || !age || !department || !location) {
-
       setStudent({
         ...student,
-        errorMsg: "Enter all required fields"
-      })
-
-    }
-
-    else if (!validEmail && !validPwd) {
-
+        errorMsg: 'Enter all required fields',
+      });
+    } else if (!validEmail && !validPwd) {
       setStudent({
         ...student,
-        errorMsg: "Enter valid Email and Valid Password"
-      })
-    }
-    else if (!validEmail && validPwd) {
+        errorMsg: 'Enter valid Email and Valid Password',
+      });
+    } else if (!validEmail && validPwd) {
       setStudent({
         ...student,
-        errorMsg: "Enter Valid Email"
-      })
-    }
-    else if (validEmail && !validPwd) {
+        errorMsg: 'Enter Valid Email',
+      });
+    } else if (validEmail && !validPwd) {
       setStudent({
         ...student,
-        errorMsg: "Enter Valid Password it should have special char, lowercase, uppercase and number"
-      })
-    }
-    else {
-
-
+        errorMsg:
+          'Enter Valid Password it should have special char, lowercase, uppercase and number',
+      });
+    } else {
       if (props.updateStudent) {
-
         const updatedStudent = {
           id: student.id,
           name: name,
@@ -102,12 +95,10 @@ const StudentForm = (props) => {
           gender: gender,
           age: age,
           department: department,
-          location: location
-        }
+          location: location,
+        };
 
-        dispatch({ type: "API_UPDATE_STUDENT_CALL_REQUEST", student: updatedStudent })
-
-
+        dispatch({ type: 'API_UPDATE_STUDENT_CALL_REQUEST', student: updatedStudent });
       } else {
         const student = {
           name: name,
@@ -117,34 +108,33 @@ const StudentForm = (props) => {
           gender: gender,
           age: age,
           department: department,
-          location: location
-        }
-        dispatch({ type: "API_CREATE_STUDENT_CALL_REQUEST", student: student })
-
-
+          location: location,
+        };
+        dispatch({ type: 'API_CREATE_STUDENT_CALL_REQUEST', student: student });
       }
-
     }
   };
 
-
-
   return (
-    <div className="container"> <br />
+    <div className="container">
+      {' '}
+      <br />
       <form onSubmit={(e) => e.preventDefault()}>
-
-        <h1 > Student Form </h1>
+        <h1> Student Form </h1>
 
         <div class="col-25">
           <label class="label"> Student Name: </label>
         </div>
         <div class="col-75">
-          <input id="studentName" type="text"
+          <input
+            id="studentName"
+            type="text"
             value={student.studentName}
-            onChange={(e) => setStudent({
-              ...student,
-              studentName: e.target.value
-            })
+            onChange={(e) =>
+              setStudent({
+                ...student,
+                studentName: e.target.value,
+              })
             }
           />
         </div>
@@ -154,62 +144,75 @@ const StudentForm = (props) => {
             <label class="label"> Student Class: </label>
           </div>
           <div class="col-75">
-            <input id="studentClass" type="text"
+            <input
+              id="studentClass"
+              type="text"
               value={student.studentClass}
-              onChange={(e) => setStudent({
-                ...student,
-                studentClass: e.target.value
-              })
+              onChange={(e) =>
+                setStudent({
+                  ...student,
+                  studentClass: e.target.value,
+                })
               }
             />
           </div>
         </div>
-        {!props.updateStudent ?
+        {!props.updateStudent ? (
           <div class="row">
             <div class="col-25">
               <label class="label"> Student Email: </label>
             </div>
             <div class="col-75">
-              <input id="studentEmail" type="text"
+              <input
+                id="studentEmail"
+                type="text"
                 value={student.studentEmail}
-                onChange={(e) => setStudent({
-                  ...student,
-                  studentEmail: e.target.value
-                })
+                onChange={(e) =>
+                  setStudent({
+                    ...student,
+                    studentEmail: e.target.value,
+                  })
                 }
               />
             </div>
           </div>
-          : null}
+        ) : null}
 
-        {!props.updateStudent ?
+        {!props.updateStudent ? (
           <div class="row">
             <div class="col-25">
               <label className="label"> Student Password: </label>
             </div>
             <div class="col-75">
-              <input id="studentPassword" type="password"
+              <input
+                id="studentPassword"
+                type="password"
                 value={student.studentPassword}
-                onChange={(e) => setStudent({
-                  ...student,
-                  studentPassword: e.target.value
-                })
+                onChange={(e) =>
+                  setStudent({
+                    ...student,
+                    studentPassword: e.target.value,
+                  })
                 }
               />
             </div>
           </div>
-          : null}
+        ) : null}
 
         <div class="row">
           <div class="col-25">
-            <label class="label"> Student Gender: </label> </div>
+            <label class="label"> Student Gender: </label>
+          </div>
           <div class="col-75">
-            <input id="studentGender" type="text"
+            <input
+              id="studentGender"
+              type="text"
               value={student.studentGender}
-              onChange={(e) => setStudent({
-                ...student,
-                studentGender: e.target.value
-              })
+              onChange={(e) =>
+                setStudent({
+                  ...student,
+                  studentGender: e.target.value,
+                })
               }
             />
           </div>
@@ -217,14 +220,18 @@ const StudentForm = (props) => {
 
         <div class="row">
           <div class="col-25">
-            <label class="label"> Student Age: </label> </div>
+            <label class="label"> Student Age: </label>
+          </div>
           <div class="col-75">
-            <input id="studentAge" type="text"
+            <input
+              id="studentAge"
+              type="text"
               value={student.studentAge}
-              onChange={(e) => setStudent({
-                ...student,
-                studentAge: e.target.value
-              })
+              onChange={(e) =>
+                setStudent({
+                  ...student,
+                  studentAge: e.target.value,
+                })
               }
             />
           </div>
@@ -235,12 +242,15 @@ const StudentForm = (props) => {
             <label class="label"> Student Department: </label>
           </div>
           <div class="col-75">
-            <input id="studentDepartment" type="text"
+            <input
+              id="studentDepartment"
+              type="text"
               value={student.studentDepartment}
-              onChange={(e) => setStudent({
-                ...student,
-                studentDepartment: e.target.value
-              })
+              onChange={(e) =>
+                setStudent({
+                  ...student,
+                  studentDepartment: e.target.value,
+                })
               }
             />
           </div>
@@ -251,12 +261,15 @@ const StudentForm = (props) => {
             <label class="label"> Student Location: </label>
           </div>
           <div class="col-75">
-            <input id="studentLocation" type="text"
+            <input
+              id="studentLocation"
+              type="text"
               value={student.studentLocation}
-              onChange={(e) => setStudent({
-                ...student,
-                studentLocation: e.target.value
-              })
+              onChange={(e) =>
+                setStudent({
+                  ...student,
+                  studentLocation: e.target.value,
+                })
               }
             />
           </div>
@@ -265,39 +278,47 @@ const StudentForm = (props) => {
         <div class="row">
           <div class="col-25"></div>
           <div class="col-75">
-            <button class="button button1" onClick={(e) => {
-              e.preventDefault();
-              document.getElementById("studentClass").value = "";
-              document.getElementById("studentName").value = "";
-              document.getElementById("studentEmail").value = "";
-              document.getElementById("studentGender").value = "";
-              document.getElementById("studentAge").value = "";
-              document.getElementById("studentDepartment").value = "";
-              document.getElementById("studentLocation").value = "";
-              document.getElementById("studentPassword").value = "";
-            }} > RESET </button>
+            <button
+              class="button button1"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('studentClass').value = '';
+                document.getElementById('studentName').value = '';
+                document.getElementById('studentEmail').value = '';
+                document.getElementById('studentGender').value = '';
+                document.getElementById('studentAge').value = '';
+                document.getElementById('studentDepartment').value = '';
+                document.getElementById('studentLocation').value = '';
+                document.getElementById('studentPassword').value = '';
+              }}
+            >
+              {' '}
+              RESET{' '}
+            </button>
 
-            <button class="button button1" onClick={(e) => { handleOnSubmit(e, student) }
-            }
-            > SUBMIT </button>
+            <button
+              class="button button1"
+              onClick={(e) => {
+                handleOnSubmit(e, student);
+              }}
+            >
+              {' '}
+              SUBMIT{' '}
+            </button>
           </div>
         </div>
 
         <div class="row">
           <div class="col-25"></div>
           <div class="col-75">
-          <ClipLoader color={"#26067E"} size={50} loading={loading} />
+            <ClipLoader color={'#26067E'} size={50} loading={loading} />
             {student.errorMsg && <p className="form__p">{student.errorMsg}</p>}
           </div>
         </div>
       </form>
-
       {/* {redirect && <Redirect to='/help'/>} */}
-
-
     </div>
-  )
+  );
 };
-
 
 export default StudentForm;

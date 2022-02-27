@@ -1,29 +1,28 @@
 .header {
-    background: $off_black;
-    color: white;
-    margin-bottom: $xl-size;
-    padding: $m-size 0;
-    height: $xl-size;
+  background: $off_black;
+  color: white;
+  margin-bottom: $xl-size;
+  padding: $m-size 0;
+  height: $xl-size;
 }
 
 .header__title {
-    font-size: $l-size;
-    margin: 0;
-    color:yellow;
-    text-align: center ;
-
+  font-size: $l-size;
+  margin: 0;
+  color: yellow;
+  text-align: center;
 }
 
 .header__subtitle {
-    color: $off_white;
-    font-size: $m2-size;
-    font-weight: 500;
-    margin: 0;
-    padding: 30px;
+  color: $off_white;
+  font-size: $m2-size;
+  font-weight: 500;
+  margin: 0;
+  padding: 30px;
 }
 
 @media (min-width: $desktop-breakpoint) {
-    .header {
-        margin-bottom: $xl-size;
-    }
+  .header {
+    margin-bottom: $xl-size;
+  }
 }
