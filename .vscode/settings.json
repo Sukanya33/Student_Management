@@ -3,5 +3,8 @@
   "eslint.autoFixOnSave": true,
   "eslint.workingDirectories": [
     "C:\\Udemy_React_Project\\Student_Project\\Version_2\\React_StudentManagement\\Student_Management"
-  ]
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }

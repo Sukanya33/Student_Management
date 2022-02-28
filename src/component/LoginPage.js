@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import validator from 'validator';
 import { ClipLoader } from 'react-spinners';
 
-const LoginPage = (props) => {
+const LoginPage = () => {
   const [login, setLogin] = useState({
     email: '',
     passWord: '',
