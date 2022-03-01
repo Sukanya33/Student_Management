@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import LoginPage from './LoginPage';
+import LoginPage from '../LoginPage';
 import { useDispatch, useSelector } from 'react-redux';
 
 jest.mock('react-redux', () => ({
