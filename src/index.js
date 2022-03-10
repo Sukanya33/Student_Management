@@ -3,6 +3,7 @@ import Router from './routers/Router';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { ThemeProvider } from 'styled-components';
 import CreateSagaMiddleWare from 'redux-saga';
 import './styles/styles.scss';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
@@ -20,6 +21,10 @@ const store = createStore(
 );
 
 sagaMiddleware.run(sagas);
+
+const theme = {
+  colors: {},
+};
 
 const jsx = (
   <Provider store={store}>

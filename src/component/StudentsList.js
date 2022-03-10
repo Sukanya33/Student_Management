@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ClipLoader } from 'react-spinners';
+import StickyHeadTable from './StickyHeadTable';
 
-const StudentsList = (props) => {
+const StudentsList = () => {
   const studentList = useSelector((state) => state.studentsAPI.students);
   const loading = useSelector((state) => state.studentsAPI.fetching);
 
@@ -17,7 +18,9 @@ const StudentsList = (props) => {
       <br />
       <h1 align="center"> Students Dashboard </h1>
 
-      {studentList && (
+      {studentList && <StickyHeadTable studentList={studentList} />}
+
+      {/* {studentList && (
         <table>
           <tr key={'header'}>
             <td className="header__subtitle">Name</td>
@@ -57,7 +60,7 @@ const StudentsList = (props) => {
             </tr>
           ))}
         </table>
-      )}
+      )} */}
 
       <div className="loadingIndicator">
         <ClipLoader color={'#26067E'} size={50} loading={loading} />
